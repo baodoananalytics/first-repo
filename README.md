@@ -44,7 +44,7 @@ The dataset is sourced from official institutions (General Statistics Office, Go
     * Developed complex DAX measures using CALCULATE, FILTER, SUMX, and ALLSELECTED.
     * Implemented Time Intelligence functions (YoY, MoM, YTD).
     * Created and organized charts with Z-view method.
-    * Leveraged Bookmarks, Slicers and Button Navigations for seamless dashboard interactivity.
+    * Leveraged **Tooltips, Bookmarks, Slicers and Button Navigations** for seamless dashboard interactivity.
 5. **Performance Optimization:**
     * Configured Incremental Refresh to significantly reduce refresh duration and minimize resource consumption on the MySQL server.
     * Importing custom layouts designed by Power Point to reduce rendering time and ensure a smooth interaction for end-users.
@@ -57,3 +57,6 @@ The **Macro Economics Dashboard** serves as a "Single Source of Truth" for under
 
 * **Actionable Insights:** Empowering investors to identify cyclical trends and pivot strategies before market shifts.
 * **Efficiency:** Reducing the
+
+## Contact
+*  [Linkedin](https://www.linkedin.com/in/bao-doan-833a6615a/)

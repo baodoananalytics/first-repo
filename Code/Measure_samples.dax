@@ -1,0 +1,75 @@
+﻿gdp = 
+    CALCULATE(
+        SUMX(fact_gdp, fact_gdp[value]),
+        FILTER(fact_gdp, fact_gdp[indicator] = "gdp_nominal")
+    ) / 1e15
+
+
+gdp_latest = 
+VAR x = CALCULATE(MAX(_dim_calendar[Date]), ALLSELECTED(_dim_calendar[Date]))
+
+VAR start_of_quarter =
+    DATE(
+        YEAR(x),
+        SWITCH(
+            TRUE(),
+            MONTH(x) <= 3, 1,
+            MONTH(x) <= 6, 4,
+            MONTH(x) <= 9, 7,
+            10
+        ),
+        1
+    )
+
+RETURN
+    CALCULATE(
+        SUMX(fact_gdp, fact_gdp[value]),
+        FILTER(fact_gdp, fact_gdp[date] = start_of_quarter),
+        FILTER(fact_gdp, fact_gdp[indicator] = "gdp_nominal")
+    ) / 1e15
+
+
+gdp_yoy = 
+VAR LY_gdp_nominal = CALCULATE([gdp],SAMEPERIODLASTYEAR(_dim_calendar[Date]))
+RETURN
+    DIVIDE(
+        [gdp] - LY_gdp_nominal,
+        LY_gdp_nominal
+    )
+
+
+gdp_yoy_latest = 
+VAR x = CALCULATE(MAX(_dim_calendar[Date]), ALLSELECTED(_dim_calendar[Date]))
+
+VAR start_of_quarter =
+    DATE(
+        YEAR(x),
+        SWITCH(
+            TRUE(),
+            MONTH(x) <= 3, 1,
+            MONTH(x) <= 6, 4,
+            MONTH(x) <= 9, 7,
+            10
+        ),
+        1
+    )
+
+RETURN 
+    CALCULATE(
+        [gdp_yoy],
+        FILTER(_dim_calendar,_dim_calendar[Date] = start_of_quarter)
+    )
+    
+gdp_total_yoy = 
+VAR gdp_total = CALCULATE([gdp],REMOVEFILTERS(dim_gdp_industry))
+VAR LY_gdp = 
+    CALCULATE(
+        [gdp],
+        REMOVEFILTERS(dim_gdp_industry),
+        SAMEPERIODLASTYEAR(_dim_calendar[Date])
+    )
+RETURN
+    DIVIDE(
+        gdp_total - LY_gdp,
+        LY_gdp
+    )
